@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CampusFin | College Financial Readiness</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+
+<!-- ========================================================= -->
+<!-- NAVIGATION -->
+<!-- ========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            CampusFin
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <!-- Home -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        aria-current="page"
+                        href="/">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+
+                <!-- College Cost -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/college-cost">
+
+                        College Cost
+
+                    </a>
+
+                </li>
+
+
+                <!-- Monthly Budget -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/monthly-budget">
+
+                        Monthly Budget
+
+                    </a>
+
+                </li>
+
+
+                <!-- Financial Readiness -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/financial-readiness">
+
+                        Financial Readiness
+
+                    </a>
+
+                </li>
+
+
+                <!-- College Comparison -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/college-comparison">
+
+                        College Comparison
+
+                    </a>
+
+                </li>
+
+
+                <!-- What-If -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/what-if">
+
+                        What-If
+
+                    </a>
+
+                </li>
+
+
+                <!-- AI Analysis -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/ai-financial-analysis">
+
+                        AI Analysis
+
+                    </a>
+
+                </li>
+
+
+                <!-- ================================================= -->
+                <!-- LOGGED-IN ACCOUNT CONTROLS -->
+                <!-- ================================================= -->
+
+                <li
+                    class="nav-item ms-lg-3"
+                    sec:authorize="isAuthenticated()">
+
+                    <span class="navbar-text small text-light">
+
+                        <span class="text-secondary">
+                            Signed in as
+                        </span>
+
+                        <strong
+                            class="ms-1"
+                            sec:authentication="name">
+
+                            user@example.com
+
+                        </strong>
+
+                    </span>
+
+                </li>
+
+
+                <li
+                    class="nav-item ms-lg-2"
+                    sec:authorize="isAuthenticated()">
+
+                    <form
+                        th:action="@{/logout}"
+                        method="post"
+                        class="d-inline">
+
+                        <button
+                            type="submit"
+                            class="btn btn-outline-light btn-sm">
+
+                            Logout
+
+                        </button>
+
+                    </form>
+
+                </li>
+
+
+                <!-- ================================================= -->
+                <!-- LOGGED-OUT ACCOUNT CONTROLS -->
+                <!-- ================================================= -->
+
+                <li
+                    class="nav-item ms-lg-3"
+                    sec:authorize="isAnonymous()">
+
+                    <a
+                        class="nav-link"
+                        href="/login">
+
+                        Login
+
+                    </a>
+
+                </li>
+
+
+                <li
+                    class="nav-item ms-lg-2"
+                    sec:authorize="isAnonymous()">
+
+                    <a
+                        class="btn btn-primary btn-sm"
+                        href="/signup">
+
+                        Sign Up
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ========================================================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================================================= -->
+
+<main>
+
+
+    <!-- ===================================================== -->
+    <!-- HERO -->
+    <!-- ===================================================== -->
+
+    <section class="container py-5">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+
+                <p class="text-primary fw-semibold mb-3">
+                    AI-Powered College Financial Readiness Platform
+                </p>
+
+                <h1 class="display-4 fw-bold mb-4">
+                    Make smarter college financial decisions
+                </h1>
+
+                <p class="lead text-secondary mb-4">
+
+                    CampusFin helps college-bound students estimate costs,
+                    build budgets, assess financial readiness, compare colleges,
+                    test different financial scenarios, and review combined
+                    financial analysis.
+
+                </p>
+
+
+                <!-- Feature buttons are available to everyone -->
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    <a
+                        href="/college-cost"
+                        class="btn btn-primary btn-lg">
+
+                        College Cost
+
+                    </a>
+
+
+                    <a
+                        href="/monthly-budget"
+                        class="btn btn-outline-primary btn-lg">
+
+                        Monthly Budget
+
+                    </a>
+
+
+                    <a
+                        href="/financial-readiness"
+                        class="btn btn-outline-primary btn-lg">
+
+                        Financial Readiness
+
+                    </a>
+
+
+                    <a
+                        href="/college-comparison"
+                        class="btn btn-outline-dark btn-lg">
+
+                        Compare Colleges
+
+                    </a>
+
+
+                    <a
+                        href="/what-if"
+                        class="btn btn-outline-success btn-lg">
+
+                        What-If Simulator
+
+                    </a>
+
+
+                    <a
+                        href="/ai-financial-analysis"
+                        class="btn btn-dark btn-lg">
+
+                        AI Analysis
+
+                    </a>
+
+                </div>
+
+
+                <!-- Optional account prompt for anonymous visitors -->
+
+                <div
+                    class="mt-4"
+                    sec:authorize="isAnonymous()">
+
+                    <p class="text-secondary mb-2">
+                        Want to save your personal CampusFin profile?
+                    </p>
+
+                    <a
+                        href="/signup"
+                        class="btn btn-sm btn-outline-primary me-2">
+
+                        Create Account
+
+                    </a>
+
+                    <a
+                        href="/login"
+                        class="btn btn-sm btn-outline-secondary">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body p-4">
+
+                        <h2 class="h4 mb-4">
+                            What CampusFin Can Do
+                        </h2>
+
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item px-0">
+                                Estimate annual and four-year college costs
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Calculate scholarships and funding gaps
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Analyze monthly income and expenses
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Measure savings and emergency-fund coverage
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Assess financial readiness
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Compare multiple colleges side by side
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Test different financial scenarios
+                            </li>
+
+                            <li class="list-group-item px-0">
+                                Generate combined AI-supported analysis
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- FEATURES -->
+    <!-- ===================================================== -->
+
+    <section class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                CampusFin Features
+            </h2>
+
+            <p class="text-secondary">
+
+                Build a complete picture of college affordability
+                and financial readiness.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- College Cost -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            College Cost Calculator
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Estimate tuition, housing, food, books,
+                            transportation, scholarships, family contributions,
+                            student income, and your expected funding gap.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Annual college cost</li>
+                            <li>Four-year projected cost</li>
+                            <li>Annual funding gap</li>
+                            <li>Four-year funding gap</li>
+                            <li>Scholarship coverage</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/college-cost"
+                                class="btn btn-outline-primary">
+
+                                Calculate College Cost
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Monthly Budget -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            Monthly Budget Planner
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Understand whether your monthly income can support
+                            housing, food, transportation, books,
+                            entertainment, subscriptions, and other expenses.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Total monthly expenses</li>
+                            <li>Monthly surplus or deficit</li>
+                            <li>Savings rate</li>
+                            <li>Emergency-fund coverage</li>
+                            <li>Largest expense category</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/monthly-budget"
+                                class="btn btn-outline-primary">
+
+                                Build Monthly Budget
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Financial Readiness -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            Financial Readiness Assessment
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Evaluate knowledge and confidence across important
+                            areas of college financial planning.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Budgeting knowledge</li>
+                            <li>College cost awareness</li>
+                            <li>Scholarship knowledge</li>
+                            <li>Credit and debt knowledge</li>
+                            <li>Savings and emergency readiness</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/financial-readiness"
+                                class="btn btn-outline-primary">
+
+                                Assess Readiness
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- College Comparison -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            College Comparison
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Compare multiple college choices using the same
+                            cost and funding assumptions.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Save multiple colleges</li>
+                            <li>Compare annual costs</li>
+                            <li>Compare four-year costs</li>
+                            <li>Compare funding gaps</li>
+                            <li>Compare scholarship coverage</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/college-comparison"
+                                class="btn btn-outline-dark">
+
+                                Compare Colleges
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- What If -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            What-If Simulator
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Explore how changing scholarships, college costs,
+                            family contributions, income, or expenses may
+                            affect affordability.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Increase scholarship amounts</li>
+                            <li>Reduce housing costs</li>
+                            <li>Change family contribution</li>
+                            <li>Change student income</li>
+                            <li>Evaluate scenario risk</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/what-if"
+                                class="btn btn-outline-success">
+
+                                Run What-If Scenario
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Analysis -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <h3 class="h4">
+                            AI Financial Analysis
+                        </h3>
+
+                        <p class="text-secondary">
+
+                            Combine college-cost, monthly-budget,
+                            and readiness information into a single
+                            decision-support view.
+
+                        </p>
+
+
+                        <ul class="small text-secondary">
+
+                            <li>Overall financial risk</li>
+                            <li>Financial strengths</li>
+                            <li>Financial concerns</li>
+                            <li>Priority recommendations</li>
+                            <li>Combined profile summary</li>
+
+                        </ul>
+
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="/ai-financial-analysis"
+                                class="btn btn-dark">
+
+                                View AI Analysis
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- HOW CAMPUSFIN WORKS -->
+    <!-- ===================================================== -->
+
+    <section class="bg-white border-top border-bottom py-5">
+
+        <div class="container">
+
+            <div class="text-center mb-5">
+
+                <p class="text-primary fw-semibold mb-2">
+                    Simple Planning Workflow
+                </p>
+
+                <h2 class="fw-bold">
+                    How CampusFin Works
+                </h2>
+
+                <p class="text-secondary">
+
+                    Complete the tools step by step to create a more
+                    complete picture of college financial readiness.
+
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- Step 1 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-primary mb-3">
+                                Step 1
+                            </span>
+
+                            <h3 class="h5">
+                                Estimate College Cost
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Enter tuition, housing, food, transportation,
+                                scholarships, family support, and student income.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step 2 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-primary mb-3">
+                                Step 2
+                            </span>
+
+                            <h3 class="h5">
+                                Build a Monthly Budget
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Determine whether monthly income can support
+                                expected living expenses and savings goals.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step 3 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-primary mb-3">
+                                Step 3
+                            </span>
+
+                            <h3 class="h5">
+                                Assess Financial Readiness
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Evaluate knowledge of budgeting, college costs,
+                                scholarships, credit, debt, emergency savings,
+                                and saving habits.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step 4 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-dark mb-3">
+                                Step 4
+                            </span>
+
+                            <h3 class="h5">
+                                Compare Colleges
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Add different colleges and compare the
+                                financial impact of each option side by side.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step 5 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-success mb-3">
+                                Step 5
+                            </span>
+
+                            <h3 class="h5">
+                                Test What-If Scenarios
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Change scholarships, costs, family support,
+                                student income, and expenses to explore
+                                alternative plans.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step 6 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-secondary mb-3">
+                                Step 6
+                            </span>
+
+                            <h3 class="h5">
+                                Review Combined Analysis
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+
+                                Review your saved cost, budget, and readiness
+                                information together with CampusFin's
+                                decision-support analysis.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- EXPERIMENTAL AI NOTICE -->
+    <!-- ===================================================== -->
+
+    <section class="container py-5">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body p-4 p-md-5">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-8">
+
+                        <h2 class="h4 fw-bold">
+                            Transparent and Experimental Analysis
+                        </h2>
+
+                        <p class="text-secondary mb-lg-0">
+
+                            CampusFin combines traditional financial calculations
+                            with experimental decision-support techniques.
+                            The Financial Readiness machine-learning model currently
+                            uses synthetic training data. Combined financial-risk
+                            analysis uses transparent rule-based logic.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-lg-4 mt-3 mt-lg-0 text-lg-end">
+
+                        <a
+                            href="/financial-readiness"
+                            class="btn btn-outline-primary me-2">
+
+                            Readiness Assessment
+
+                        </a>
+
+                        <a
+                            href="/ai-financial-analysis"
+                            class="btn btn-dark">
+
+                            AI Analysis
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- EDUCATIONAL DISCLAIMER -->
+    <!-- ===================================================== -->
+
+    <section class="container pb-5">
+
+        <div class="alert alert-secondary mb-0">
+
+            <strong>
+                Educational Use:
+            </strong>
+
+            CampusFin provides educational estimates and experimental
+            decision-support analysis. It does not provide financial,
+            investment, lending, tax, accounting, or legal advice.
+            Always verify important college cost and financial-aid information
+            with official sources before making financial commitments.
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer class="border-top bg-white py-4">
+
+    <div class="container">
+
+        <div
+            class="d-flex flex-column flex-md-row
+                   justify-content-between align-items-md-center gap-3">
+
+            <div>
+
+                <p class="fw-bold mb-1">
+                    CampusFin
+                </p>
+
+                <p class="text-muted small mb-0">
+
+                    Educational and experimental
+                    college financial-readiness platform.
+
+                </p>
+
+            </div>
+
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a
+                    href="/privacy"
+                    class="text-decoration-none">
+
+                    Privacy
+
+                </a>
+
+                <a
+                    href="/terms"
+                    class="text-decoration-none">
+
+                    Terms &amp; Disclaimer
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <p class="text-muted small mb-0">
+            © 2026 CampusFin. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- ========================================================= -->
+<!-- BOOTSTRAP JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

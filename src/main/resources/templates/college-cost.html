@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>College Cost Calculator | CampusFin</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            CampusFin
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/college-cost">
+                        College Cost
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/monthly-budget">
+                        Monthly Budget
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/financial-readiness">
+                        Financial Readiness
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/college-comparison">
+                        College Comparison
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/what-if">
+                        What-If
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/ai-financial-analysis">
+                        AI Analysis
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="container py-5">
+
+    <div class="mb-4">
+
+        <h1 class="fw-bold">
+            College Cost Calculator
+        </h1>
+
+        <p class="text-muted">
+            Estimate annual and four-year college costs after scholarships,
+            family support, and student income.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-lg-7">
+
+            <form
+                th:action="@{/college-cost}"
+                th:object="${collegeCostInput}"
+                method="post"
+                class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <div
+                        class="alert alert-danger"
+                        th:if="${#fields.hasAnyErrors()}">
+
+                        <strong>
+                            Please correct the highlighted fields.
+                        </strong>
+
+                    </div>
+
+
+                    <div class="alert alert-light border small text-secondary">
+                        Blank numeric fields are treated as $0.
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        <!-- Tuition -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="tuition"
+                                class="form-label">
+
+                                Annual Tuition
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="tuition"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('tuition')} ? 'is-invalid'"
+                                th:field="*{tuition}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('tuition')}"
+                                th:errors="*{tuition}">
+
+                                Tuition error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Scholarship -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="scholarship"
+                                class="form-label">
+
+                                Annual Scholarship
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="scholarship"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('scholarship')} ? 'is-invalid'"
+                                th:field="*{scholarship}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('scholarship')}"
+                                th:errors="*{scholarship}">
+
+                                Scholarship error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Housing -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="housing"
+                                class="form-label">
+
+                                Housing
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="housing"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('housing')} ? 'is-invalid'"
+                                th:field="*{housing}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('housing')}"
+                                th:errors="*{housing}">
+
+                                Housing error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Food -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="food"
+                                class="form-label">
+
+                                Food
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="food"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('food')} ? 'is-invalid'"
+                                th:field="*{food}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('food')}"
+                                th:errors="*{food}">
+
+                                Food error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Books -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="books"
+                                class="form-label">
+
+                                Books and Supplies
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="books"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('books')} ? 'is-invalid'"
+                                th:field="*{books}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('books')}"
+                                th:errors="*{books}">
+
+                                Books error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Transportation -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="transportation"
+                                class="form-label">
+
+                                Transportation
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="transportation"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('transportation')} ? 'is-invalid'"
+                                th:field="*{transportation}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('transportation')}"
+                                th:errors="*{transportation}">
+
+                                Transportation error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Family Contribution -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="familyContribution"
+                                class="form-label">
+
+                                Family Contribution
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="familyContribution"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('familyContribution')} ? 'is-invalid'"
+                                th:field="*{familyContribution}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('familyContribution')}"
+                                th:errors="*{familyContribution}">
+
+                                Family contribution error
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Student Income -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="studentIncome"
+                                class="form-label">
+
+                                Student Annual Income
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="studentIncome"
+                                min="0"
+                                step="0.01"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('studentIncome')} ? 'is-invalid'"
+                                th:field="*{studentIncome}"
+                                placeholder="Enter amount">
+
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('studentIncome')}"
+                                th:errors="*{studentIncome}">
+
+                                Student income error
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary mt-4">
+
+                        Calculate Cost
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Results -->
+
+        <div class="col-lg-5">
+
+            <div
+                class="card shadow-sm border-0"
+                th:if="${resultsAvailable}">
+
+                <div class="card-body p-4">
+
+                    <h2 class="h4 mb-4">
+                        Estimated Results
+                    </h2>
+
+                    <p>
+                        <strong>
+                            Annual total cost:
+                        </strong>
+
+                        <span
+                            th:text="${#numbers.formatCurrency(annualTotal)}">
+                            $0.00
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>
+                            Annual funding gap:
+                        </strong>
+
+                        <span
+                            th:text="${#numbers.formatCurrency(annualFundingGap)}">
+                            $0.00
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>
+                            Four-year estimated cost:
+                        </strong>
+
+                        <span
+                            th:text="${#numbers.formatCurrency(fourYearCost)}">
+                            $0.00
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>
+                            Four-year funding gap:
+                        </strong>
+
+                        <span
+                            th:text="${#numbers.formatCurrency(fourYearFundingGap)}">
+                            $0.00
+                        </span>
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>
+                            Scholarship coverage:
+                        </strong>
+
+                        <span
+                            th:text="${#numbers.formatDecimal(scholarshipCoverage, 1, 1)}">
+                            0.0
+                        </span>%
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="alert alert-info"
+                th:if="${resultsAvailable == false}">
+
+                Enter your estimated annual college expenses and available
+                funding to calculate the projected college funding gap.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="alert alert-secondary mt-4">
+
+        <strong>Educational Estimate:</strong>
+
+        <div class="mt-2">
+            CampusFin calculations are planning estimates based on the
+            information entered. Actual tuition, financial aid, scholarships,
+            and living costs should be verified before making enrollment
+            decisions.
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="border-top bg-white py-4 mt-5">
+
+    <div class="container">
+
+        <p class="mb-1 fw-semibold">
+            CampusFin
+        </p>
+
+        <p class="mb-0 text-muted small">
+            CampusFin provides educational estimates and experimental
+            decision-support analysis and does not provide financial,
+            legal, investment, lending, or tax advice.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

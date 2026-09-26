@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sign Up | CampusFin</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            CampusFin
+        </a>
+
+        <div>
+
+            <a
+                href="/login"
+                class="btn btn-outline-light btn-sm">
+
+                Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5 col-md-7">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <h1 class="h3 fw-bold mb-2">
+                        Create Your CampusFin Account
+                    </h1>
+
+                    <p class="text-secondary mb-4">
+                        Create an account to keep your college financial
+                        information separate and private.
+                    </p>
+
+
+                    <div
+                        class="alert alert-danger"
+                        th:if="${signupError}"
+                        th:text="${signupError}">
+                    </div>
+
+
+                    <form
+                        th:action="@{/signup}"
+                        th:object="${signupRequest}"
+                        method="post">
+
+
+                        <div
+                            class="alert alert-danger"
+                            th:if="${#fields.hasAnyErrors()}">
+
+                            Please correct the highlighted fields.
+
+                        </div>
+
+
+                        <!-- Name -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="name"
+                                class="form-label">
+
+                                Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                th:field="*{name}"
+                                autocomplete="name"
+                                required>
+
+                            <div
+                                class="invalid-feedback"
+                                th:errors="*{name}">
+                            </div>
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="email"
+                                class="form-label">
+
+                                Email
+
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                th:field="*{email}"
+                                autocomplete="email"
+                                required>
+
+                            <div
+                                class="invalid-feedback"
+                                th:errors="*{email}">
+                            </div>
+
+                        </div>
+
+
+                        <!-- Password -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="password"
+                                class="form-label">
+
+                                Password
+
+                            </label>
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                th:field="*{password}"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required>
+
+                            <div
+                                class="form-text">
+
+                                Password must be at least 8 characters.
+
+                            </div>
+
+                            <div
+                                class="invalid-feedback"
+                                th:errors="*{password}">
+                            </div>
+
+                        </div>
+
+
+                        <!-- Confirm Password -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="confirmPassword"
+                                class="form-label">
+
+                                Confirm Password
+
+                            </label>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                class="form-control"
+                                th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                                th:field="*{confirmPassword}"
+                                autocomplete="new-password"
+                                required>
+
+                            <div
+                                class="invalid-feedback"
+                                th:errors="*{confirmPassword}">
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100">
+
+                            Create Account
+
+                        </button>
+
+                    </form>
+
+
+                    <p class="text-center text-secondary mt-4 mb-0">
+
+                        Already have an account?
+
+                        <a href="/login">
+                            Login
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="border-top bg-white py-4 mt-5">
+
+    <div class="container text-center">
+
+        <a
+            href="/privacy"
+            class="text-decoration-none me-3">
+
+            Privacy
+
+        </a>
+
+        <a
+            href="/terms"
+            class="text-decoration-none">
+
+            Terms &amp; Disclaimer
+
+        </a>
+
+        <p class="text-muted small mt-2 mb-0">
+            © 2026 CampusFin
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

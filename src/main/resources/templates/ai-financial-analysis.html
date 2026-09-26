@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AI Financial Analysis | CampusFin</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+
+<!-- ========================================================= -->
+<!-- NAVIGATION -->
+<!-- ========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            CampusFin
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/college-cost">
+                        College Cost
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/monthly-budget">
+                        Monthly Budget
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/financial-readiness">
+                        Financial Readiness
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/college-comparison">
+                        College Comparison
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/what-if">
+                        What-If
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        aria-current="page"
+                        href="/ai-financial-analysis">
+
+                        AI Analysis
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ========================================================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================================================= -->
+
+<main class="container py-5">
+
+    <div class="mb-4">
+
+        <p class="text-primary fw-semibold mb-2">
+            Combined Financial Decision Support
+        </p>
+
+        <h1 class="fw-bold">
+            AI Financial Analysis
+        </h1>
+
+        <p class="text-secondary">
+            CampusFin combines your college-cost estimate, monthly budget,
+            and financial-readiness assessment to create one overall
+            financial analysis.
+        </p>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- NO PROFILE YET -->
+    <!-- ===================================================== -->
+
+    <div
+        class="alert alert-warning"
+        th:if="${profileAvailable == false}">
+
+        <h2 class="h5">
+            Complete the CampusFin modules first
+        </h2>
+
+        <p class="mb-3">
+            CampusFin does not yet have enough information to create
+            a combined financial analysis.
+        </p>
+
+        <a
+            href="/college-cost"
+            class="btn btn-primary me-2 mb-2">
+
+            Start with College Cost
+
+        </a>
+
+        <a
+            href="/monthly-budget"
+            class="btn btn-outline-primary me-2 mb-2">
+
+            Monthly Budget
+
+        </a>
+
+        <a
+            href="/financial-readiness"
+            class="btn btn-outline-primary mb-2">
+
+            Financial Readiness
+
+        </a>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- PROFILE EXISTS -->
+    <!-- ===================================================== -->
+
+    <div th:if="${profileAvailable}">
+
+
+        <!-- ================================================= -->
+        <!-- PROFILE SUMMARY -->
+        <!-- ================================================= -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- College Cost Metrics -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <h2 class="h5 mb-3">
+                            College Cost
+                        </h2>
+
+                        <p>
+                            <strong>Annual cost:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.annualCollegeCost)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Four-year cost:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.fourYearCollegeCost)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Four-year funding gap:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.fourYearFundingGap)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Scholarship coverage:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatDecimal(profile.scholarshipCoverage, 1, 1)}">
+                                0.0
+                            </span>%
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Budget Metrics -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <h2 class="h5 mb-3">
+                            Monthly Budget
+                        </h2>
+
+                        <p>
+                            <strong>Monthly income:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.monthlyIncome)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Monthly expenses:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.monthlyExpenses)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Monthly balance:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatCurrency(profile.monthlyBalance)}">
+                                $0.00
+                            </span>
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Savings rate:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatDecimal(profile.savingsRate, 1, 1)}">
+                                0.0
+                            </span>%
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Readiness Metrics -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <h2 class="h5 mb-3">
+                            Financial Readiness
+                        </h2>
+
+                        <p>
+                            <strong>Readiness score:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatDecimal(profile.readinessScore, 1, 1)}">
+                                0.0
+                            </span>%
+                        </p>
+
+                        <p>
+                            <strong>Readiness level:</strong><br>
+
+                            <span th:text="${profile.readinessLevel}">
+                                Unknown
+                            </span>
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Emergency-fund coverage:</strong><br>
+
+                            <span
+                                th:text="${#numbers.formatDecimal(profile.emergencyFundCoverage, 1, 1)}">
+                                0.0
+                            </span>
+                            months
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ANALYSIS UNAVAILABLE -->
+        <!-- ================================================= -->
+
+        <div
+            class="alert alert-warning"
+            th:if="${analysisAvailable == false}">
+
+            <strong>
+                AI analysis unavailable.
+            </strong>
+
+            <div
+                class="mt-2"
+                th:text="${analysisError}">
+
+                The AI service is unavailable.
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ANALYSIS AVAILABLE -->
+        <!-- ================================================= -->
+
+        <div th:if="${analysisAvailable}">
+
+
+            <!-- Overall Risk -->
+
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-body p-4">
+
+                    <div
+                        class="d-flex justify-content-between
+                               align-items-start flex-wrap gap-3">
+
+                        <div>
+
+                            <h2 class="h4 mb-2">
+                                Overall College Financial Risk
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Combined CampusFin analysis
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="badge fs-5"
+                            th:classappend="${overallRisk == 'Low'}
+                                ? 'bg-success'
+                                : (${overallRisk == 'Moderate'}
+                                    ? 'bg-warning text-dark'
+                                    : 'bg-danger')"
+                            th:text="${overallRisk}">
+
+                            Moderate
+
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <h3 class="h5">
+                        Analysis Summary
+                    </h3>
+
+                    <div class="alert alert-primary mt-3 mb-0">
+
+                        <span th:text="${analysisSummary}">
+                            Analysis summary
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- STRENGTHS / CONCERNS / RECOMMENDATIONS -->
+            <!-- ================================================= -->
+
+            <div class="row g-4">
+
+
+                <!-- Strengths -->
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow-sm border-0 h-100">
+
+                        <div class="card-body p-4">
+
+                            <h2 class="h5 mb-3">
+                                Financial Strengths
+                            </h2>
+
+                            <ul class="list-group list-group-flush">
+
+                                <li
+                                    class="list-group-item px-0"
+                                    th:each="strength : ${analysisStrengths}"
+                                    th:text="${strength}">
+
+                                    Strength
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Concerns -->
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow-sm border-0 h-100">
+
+                        <div class="card-body p-4">
+
+                            <h2 class="h5 mb-3">
+                                Financial Concerns
+                            </h2>
+
+                            <ul class="list-group list-group-flush">
+
+                                <li
+                                    class="list-group-item px-0"
+                                    th:each="concern : ${analysisConcerns}"
+                                    th:text="${concern}">
+
+                                    Concern
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Recommendations -->
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow-sm border-0 h-100">
+
+                        <div class="card-body p-4">
+
+                            <h2 class="h5 mb-3">
+                                Priority Recommendations
+                            </h2>
+
+                            <div class="list-group list-group-flush">
+
+                                <div
+                                    class="list-group-item px-0"
+                                    th:each="recommendation, status : ${analysisRecommendations}">
+
+                                    <strong
+                                        th:text="${status.count + '.'}">
+                                        1.
+                                    </strong>
+
+                                    <span th:text="${recommendation}">
+                                        Recommendation
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- EXPLANATION -->
+            <!-- ================================================= -->
+
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-body p-4">
+
+                    <h2 class="h5">
+                        How This Analysis Is Produced
+                    </h2>
+
+                    <p class="text-secondary mb-0">
+
+                        The combined CampusFin financial analysis currently
+                        uses transparent rule-based indicators derived from
+                        your saved college-cost, monthly-budget, and
+                        financial-readiness information.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- EXPERIMENTAL NOTICE -->
+            <!-- ================================================= -->
+
+            <div class="alert alert-secondary mt-4">
+
+                <strong>
+                    Experimental AI Notice:
+                </strong>
+
+                <div class="mt-2">
+
+                    The combined financial-risk analysis currently uses
+                    transparent rule-based decision logic. CampusFin's separate
+                    Financial Readiness machine-learning model uses synthetic
+                    training data and has not been scientifically validated
+                    for financial decision-making.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer class="border-top bg-white py-4 mt-5">
+
+    <div class="container">
+
+        <div
+            class="d-flex flex-column flex-md-row
+                   justify-content-between align-items-md-center gap-3">
+
+            <div>
+
+                <p class="fw-bold mb-1">
+                    CampusFin
+                </p>
+
+                <p class="text-muted small mb-0">
+
+                    Educational and experimental
+                    college financial-readiness platform.
+
+                </p>
+
+            </div>
+
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a
+                    href="/privacy"
+                    class="text-decoration-none">
+
+                    Privacy
+
+                </a>
+
+                <a
+                    href="/terms"
+                    class="text-decoration-none">
+
+                    Terms &amp; Disclaimer
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <p class="text-muted small mb-0">
+            © 2026 CampusFin. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

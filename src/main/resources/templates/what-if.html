@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>What-If Simulator | CampusFin</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold"
+            href="/">
+            CampusFin
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/college-cost">
+
+                        College Cost
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/monthly-budget">
+
+                        Monthly Budget
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/financial-readiness">
+
+                        Financial Readiness
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/college-comparison">
+
+                        College Comparison
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="/what-if">
+
+                        What-If
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/ai-financial-analysis">
+
+                        AI Analysis
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="container py-5">
+
+
+    <!-- ===================================================== -->
+    <!-- Page Heading -->
+    <!-- ===================================================== -->
+
+    <div class="mb-4">
+
+        <p class="text-primary fw-semibold mb-2">
+            Scenario Planning
+        </p>
+
+        <h1 class="fw-bold">
+            What-If Simulator
+        </h1>
+
+        <p class="text-secondary">
+
+            Change college costs, scholarships, family support,
+            student income, and monthly budget assumptions to see
+            how affordability changes.
+
+        </p>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- Input Form -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm border-0 mb-5">
+
+        <div class="card-body p-4">
+
+            <h2 class="h4 mb-4">
+                Scenario Assumptions
+            </h2>
+
+
+            <form
+                th:action="@{/what-if}"
+                th:object="${whatIfScenario}"
+                method="post">
+
+
+                <!-- Validation Message -->
+
+                <div
+                    class="alert alert-danger"
+                    th:if="${#fields.hasAnyErrors()}">
+
+                    <strong>
+                        Please correct the highlighted fields.
+                    </strong>
+
+                </div>
+
+
+                <!-- Blank Field Notice -->
+
+                <div class="alert alert-light border small text-secondary">
+
+                    Blank numeric fields are treated as $0.
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- College Costs -->
+                <!-- ================================================= -->
+
+                <h3 class="h5 mb-3">
+                    College Costs
+                </h3>
+
+
+                <div class="row g-3 mb-4">
+
+
+                    <!-- Tuition -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="tuition"
+                            class="form-label">
+
+                            Annual Tuition
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="tuition"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('tuition')} ? 'is-invalid'"
+                            th:field="*{tuition}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('tuition')}"
+                            th:errors="*{tuition}">
+
+                            Tuition error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Housing -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="housing"
+                            class="form-label">
+
+                            Annual Housing
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="housing"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('housing')} ? 'is-invalid'"
+                            th:field="*{housing}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('housing')}"
+                            th:errors="*{housing}">
+
+                            Housing error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Food -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="food"
+                            class="form-label">
+
+                            Annual Food
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="food"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('food')} ? 'is-invalid'"
+                            th:field="*{food}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('food')}"
+                            th:errors="*{food}">
+
+                            Food error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Books -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="books"
+                            class="form-label">
+
+                            Annual Books
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="books"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('books')} ? 'is-invalid'"
+                            th:field="*{books}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('books')}"
+                            th:errors="*{books}">
+
+                            Books error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Transportation -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="transportation"
+                            class="form-label">
+
+                            Annual Transportation
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="transportation"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('transportation')} ? 'is-invalid'"
+                            th:field="*{transportation}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('transportation')}"
+                            th:errors="*{transportation}">
+
+                            Transportation error
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- Funding -->
+                <!-- ================================================= -->
+
+                <h3 class="h5 mb-3">
+                    Funding
+                </h3>
+
+
+                <div class="row g-3 mb-4">
+
+
+                    <!-- Scholarship -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="scholarship"
+                            class="form-label">
+
+                            Annual Scholarship / Grant
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="scholarship"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('scholarship')} ? 'is-invalid'"
+                            th:field="*{scholarship}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('scholarship')}"
+                            th:errors="*{scholarship}">
+
+                            Scholarship error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Family Contribution -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="familyContribution"
+                            class="form-label">
+
+                            Annual Family Contribution
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="familyContribution"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('familyContribution')} ? 'is-invalid'"
+                            th:field="*{familyContribution}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('familyContribution')}"
+                            th:errors="*{familyContribution}">
+
+                            Family contribution error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Student Income -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="studentIncome"
+                            class="form-label">
+
+                            Annual Student Income
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="studentIncome"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('studentIncome')} ? 'is-invalid'"
+                            th:field="*{studentIncome}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('studentIncome')}"
+                            th:errors="*{studentIncome}">
+
+                            Student income error
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- Monthly Budget -->
+                <!-- ================================================= -->
+
+                <h3 class="h5 mb-3">
+                    Monthly Budget
+                </h3>
+
+
+                <div class="row g-3">
+
+
+                    <!-- Monthly Income -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="monthlyIncome"
+                            class="form-label">
+
+                            Monthly Income
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="monthlyIncome"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('monthlyIncome')} ? 'is-invalid'"
+                            th:field="*{monthlyIncome}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('monthlyIncome')}"
+                            th:errors="*{monthlyIncome}">
+
+                            Monthly income error
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Monthly Expenses -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="monthlyExpenses"
+                            class="form-label">
+
+                            Monthly Expenses
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="monthlyExpenses"
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('monthlyExpenses')} ? 'is-invalid'"
+                            th:field="*{monthlyExpenses}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter amount">
+
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('monthlyExpenses')}"
+                            th:errors="*{monthlyExpenses}">
+
+                            Monthly expenses error
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- Submit -->
+                <!-- ================================================= -->
+
+                <div class="mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg">
+
+                        Analyze Scenario
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- Results -->
+    <!-- ===================================================== -->
+
+    <div th:if="${resultsAvailable}">
+
+
+        <div class="mb-3">
+
+            <h2 class="h4">
+                Scenario Results
+            </h2>
+
+            <p class="text-secondary">
+
+                These results show how the assumptions above affect
+                estimated affordability.
+
+            </p>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- College Results -->
+        <!-- ================================================= -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- Annual Cost -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Annual Cost
+                        </p>
+
+                        <h3
+                            class="h4 mb-0"
+                            th:text="${#numbers.formatCurrency(annualCost)}">
+
+                            $0.00
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Four-Year Cost -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Four-Year Cost
+                        </p>
+
+                        <h3
+                            class="h4 mb-0"
+                            th:text="${#numbers.formatCurrency(fourYearCost)}">
+
+                            $0.00
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Four-Year Funding Gap -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Four-Year Funding Gap
+                        </p>
+
+                        <h3
+                            class="h4 mb-0"
+                            th:text="${#numbers.formatCurrency(fourYearFundingGap)}">
+
+                            $0.00
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Scholarship Coverage -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Scholarship Coverage
+                        </p>
+
+                        <h3 class="h4 mb-0">
+
+                            <span
+                                th:text="${#numbers.formatDecimal(
+                                    scholarshipCoverage,
+                                    1,
+                                    1
+                                )}">
+
+                                0.0
+
+                            </span>%
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- Monthly / Risk Results -->
+        <!-- ================================================= -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- Monthly Balance -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Monthly Balance
+                        </p>
+
+                        <h3
+                            class="h4 mb-0"
+                            th:text="${#numbers.formatCurrency(monthlyBalance)}">
+
+                            $0.00
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Savings Rate -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Savings Rate
+                        </p>
+
+                        <h3 class="h4 mb-0">
+
+                            <span
+                                th:text="${#numbers.formatDecimal(
+                                    savingsRate,
+                                    1,
+                                    1
+                                )}">
+
+                                0.0
+
+                            </span>%
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Scenario Risk -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body p-4">
+
+                        <p class="text-muted mb-2">
+                            Scenario Risk
+                        </p>
+
+
+                        <div th:if="${scenarioRisk == 'Low'}">
+
+                            <span class="badge bg-success fs-5">
+                                Low
+                            </span>
+
+                        </div>
+
+
+                        <div th:if="${scenarioRisk == 'Moderate'}">
+
+                            <span class="badge bg-warning text-dark fs-5">
+                                Moderate
+                            </span>
+
+                        </div>
+
+
+                        <div th:if="${scenarioRisk == 'High'}">
+
+                            <span class="badge bg-danger fs-5">
+                                High
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- Recommendation -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5">
+                    CampusFin Recommendation
+                </h2>
+
+                <div class="alert alert-primary mb-0 mt-3">
+
+                    <span th:text="${recommendation}">
+
+                        Recommendation
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- Scenario Ideas -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5">
+                    Try Another Scenario
+                </h2>
+
+                <p class="text-secondary">
+
+                    Change one assumption at a time to understand
+                    which factors have the biggest effect on affordability.
+
+                </p>
+
+
+                <div class="row g-3">
+
+
+                    <!-- More Scholarship -->
+
+                    <div class="col-md-4">
+
+                        <div class="border rounded p-3 h-100">
+
+                            <strong>
+                                More Scholarship
+                            </strong>
+
+                            <p class="small text-muted mb-0 mt-2">
+
+                                Increase scholarship funding by
+                                $5,000 or $10,000 and compare the
+                                four-year funding gap.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Lower Housing -->
+
+                    <div class="col-md-4">
+
+                        <div class="border rounded p-3 h-100">
+
+                            <strong>
+                                Lower Housing Cost
+                            </strong>
+
+                            <p class="small text-muted mb-0 mt-2">
+
+                                Test commuting, living at home,
+                                or lower-cost housing.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Higher Monthly Income -->
+
+                    <div class="col-md-4">
+
+                        <div class="border rounded p-3 h-100">
+
+                            <strong>
+                                Higher Monthly Income
+                            </strong>
+
+                            <p class="small text-muted mb-0 mt-2">
+
+                                Test whether part-time work or other
+                                income improves monthly cash flow.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- Notice -->
+    <!-- ===================================================== -->
+
+    <div class="alert alert-secondary">
+
+        <strong>
+            Scenario Planning Only:
+        </strong>
+
+        <div class="mt-2">
+
+            What-If results are estimates based on the values entered.
+            They are intended for educational planning and should not
+            be treated as financial-aid offers, lending decisions,
+            or professional financial advice.
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- Footer -->
+<!-- ========================================================= -->
+
+<footer class="border-top bg-white py-4 mt-5">
+
+    <div class="container">
+
+        <p class="mb-1 fw-semibold">
+            CampusFin
+        </p>
+
+        <p class="mb-0 text-muted small">
+
+            CampusFin provides educational estimates and experimental
+            decision-support analysis and does not provide financial,
+            legal, investment, lending, or tax advice.
+
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>
